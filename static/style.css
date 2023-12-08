@@ -2,3 +2,34 @@
     width: 100px;
     height: 100px;
 }
+.text-description{
+    top: 300px;
+    position: absolute;
+    margin-left: 300px;
+    margin-right: 200px;
+    font-size: 20px;
+}
+.feedback{
+    position: absolute;
+    margin-left: 300px;
+    margin-right: 200px;
+}
+.calc{
+    top: 200px;
+    position: absolute;
+    margin-left: 600px;
+}
+.index-img{
+    width: 700px;
+    height: 300px;
+    position: absolute;
+    margin-left: 300px;
+    top: 0;
+}
+.feedback-img{
+    width: 700px;
+    height: 300px;
+    position: absolute;
+    margin-left: 400px;
+    top: 0;
+}

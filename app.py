@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField, SelectField
 from wtforms.validators import DataRequired, InputRequired
-
+import math
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -30,7 +30,7 @@ class FeedbackForm(FlaskForm):
 class CalculatorForm(FlaskForm):
     num1 = FloatField('Число 1', validators=[InputRequired()])
     num2 = FloatField('Число 2', validators=[InputRequired()])
-    operation = SelectField('Выберите операцию', choices=[('+', '+'), ('-', '-'), ('*', '*'), ('/', '/')],
+    operation = SelectField('Выберите операцию', choices=[('+', '+'), ('-', '-'), ('*', '*'), ('/', '/'), ('x^2', 'x^2'),],
                             validators=[InputRequired()])
     submit = SubmitField('Рассчитать')
 
@@ -54,6 +54,8 @@ def calc():
             result = num1 + num2
         elif operation == '-':
             result = num1 - num2
+        elif operation == 'x^2':
+            result = math.pow(num1, 2)
         elif operation == '*':
             result = num1 * num2
         elif operation == '/':
