@@ -10,23 +10,23 @@
 </head>
 <body>
 <div class="d-flex flex-column flex-shrink-0 p-3 " style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none">
         <span class="fs-4">{{ title }}</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="{{ url_for('index') }}" class="nav-link text-dark" aria-current="page">
+            <a href="{{ url_for('index') }}" class="nav-link text-light" aria-current="page">
                 Домашняя страница
             </a>
         </li>
         <li>
-            <a href="{{ url_for('calc') }}" class="nav-link text-dark">
+            <a href="{{ url_for('calc') }}" class="nav-link text-light">
                 Калькулятор
             </a>
         </li>
         <li>
-            <a href="{{ url_for('feedback') }}" class="nav-link text-dark">
+            <a href="{{ url_for('feedback') }}" class="nav-link text-light">
                 Обратная связь
             </a>
         </li>

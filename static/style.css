@@ -2,8 +2,13 @@
     width: 100px;
     height: 100px;
 }
+body {
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .text-description{
-    top: 300px;
+    top: 100px;
     position: absolute;
     margin-left: 300px;
     margin-right: 200px;
