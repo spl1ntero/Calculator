@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="choose">
+    <h1 class="text-light hchoose">Выбор чисел</h1>
+    <form action="{{ url_for('choose') }}" method="POST">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="choice" id="oneNumber" value="one">
+            <label class="form-check-label text-light" for="oneNumber">
+                Одно число
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="choice" id="twoNumbers" value="two">
+            <label class="form-check-label text-light" for="twoNumbers">
+                Два числа
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Выбрать</button>
+    </form>
+</div>
+
+{% endblock %}

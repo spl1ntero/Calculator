@@ -3,24 +3,21 @@
 
 <div class="calc">
     <h1 class="text-light">Калькулятор</h1>
-    <form action="{{ url_for('calc') }}" method="POST" id="calculatorForm">
+    <form action="{{ url_for('calc2') }}" method="POST" id="calculatorForm">
         {{ form.hidden_tag() }}
 
         <label for="num1" class="text-light numbers">Число 1:</label>
         {{ form.num1(class="form-control", id="num1") }}
         <br>
 
-        <label for="num2" class="text-light numbers">Число 2:</label>
-        {{ form.num2(class="form-control", id="num2") }}
-        <br>
-
-        <label for="operation" class="text-light operation">Выберите операцию:</label>
-        {{ form.operation(class="form-control", id="operation") }}
+        <label for="operation2" class="text-light operation">Выберите операцию:</label>
+        {{ form.operation2(class="form-control", id="operation2") }}
         <br>
         <button type="submit" class="btn btn-primary">Вычислить</button>
     </form>
     {% if result is defined %}
-    <h2 class="text-light">Результат: {{ result }}</h2>
+    <h2 class="text-light">Результат:</h2>
+    <div class="result-field text-light">{{ result }}</div>
     {% endif %}
 </div>
 

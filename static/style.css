@@ -38,3 +38,17 @@ body {
     margin-left: 400px;
     top: 0;
 }
+.choose{
+    position: absolute;
+    margin-left: 600px;
+}
+.hchoose{
+    margin-left: -50px;
+}
+.result-field {
+    width: 300px; /* Установите нужную ширину поля */
+    max-width: 100%; /* Ограничьте максимальную ширину поля */
+    overflow: hidden; /* Скройте возможный лишний текст за пределами поля */
+    white-space: nowrap; /* Запретите перенос текста */
+    text-overflow: ellipsis; /* Отображайте многоточие, если текст не помещается */
+}
