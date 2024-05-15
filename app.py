@@ -1,23 +1,22 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField, SelectField
 from wtforms.validators import DataRequired, InputRequired
+import json
+import os
 import math
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:15931@localhost/my_database'
-db = SQLAlchemy(app)
 Bootstrap(app)
 
+DATA_FILE = 'feedback.json'
 
-class Feedback(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    message = db.Column(db.String(500), nullable=False)
+# Проверяем, существует ли файл JSON, если нет, создаем пустой
+if not os.path.exists(DATA_FILE):
+    with open(DATA_FILE, 'w') as f:
+        json.dump([], f)
 
 
 class FeedbackForm(FlaskForm):
@@ -41,6 +40,20 @@ class CalculatorForm2(FlaskForm):
                                                            ('exp(x)', 'exp(x)')],
                              validators=[InputRequired()])
     submit = SubmitField('Рассчитать')
+
+
+def read_feedback():
+    if os.path.exists(DATA_FILE) and os.path.getsize(DATA_FILE) > 0:
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    else:
+        return []
+
+
+def write_feedback(feedbacks):
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(feedbacks, f, ensure_ascii=False, indent=4)
+
 
 @app.route('/')
 def index():
@@ -108,9 +121,14 @@ def calc2():
 def feedback():
     form = FeedbackForm()
     if form.validate_on_submit():
-        feedback = Feedback(name=form.name.data, email=form.email.data, message=form.message.data)
-        db.session.add(feedback)
-        db.session.commit()
+        feedback_data = {
+            'name': form.name.data,
+            'email': form.email.data,
+            'message': form.message.data
+        }
+        feedbacks = read_feedback()
+        feedbacks.append(feedback_data)
+        write_feedback(feedbacks)
     return render_template('feedback.html', form=form, title="Обратная связь")
 
 
