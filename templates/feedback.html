@@ -3,7 +3,7 @@
 
 <div class="feedback">
     <div class="feedback-div">
-        <h1 class="hfeedback text-light">Здесь Вы можете запросить обратную связь </h1>
+        <h1 class="hfeedback text-light">Здесь Вы можете запросить обратную связь</h1>
     </div>
 
     <form class="feedback-form" method="POST">
@@ -24,8 +24,12 @@
             {{ form.message(cols=30, rows=10, class="form-control") }}
         </div>
 
+        <div class="g-recaptcha" data-sitekey="6Lcj6N0pAAAAAFAPzAYPRb5DnHhBm0TvwIyW24qC"></div>
+
         <input type="submit" value="Отправить" class="btn btn-success">
     </form>
 </div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 {% endblock %}

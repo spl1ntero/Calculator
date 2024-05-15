@@ -1,6 +1,6 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, FloatField, SelectField
 from wtforms.validators import DataRequired, InputRequired
 import json
@@ -9,6 +9,8 @@ import math
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6Lcj6N0pAAAAAFAPzAYPRb5DnHhBm0TvwIyW24qC'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6Lcj6N0pAAAAAEp5r6483W6OAgdLGgZR06w2WA70'
 Bootstrap(app)
 
 DATA_FILE = 'feedback.json'
@@ -23,7 +25,9 @@ class FeedbackForm(FlaskForm):
     name = StringField('Ваше имя', validators=[DataRequired()])
     email = StringField('Ваша почта', validators=[DataRequired()])
     message = StringField('Сообщение', validators=[DataRequired()])
+    recaptcha = RecaptchaField()
     submit = SubmitField('Отправить')
+
 
 
 class CalculatorForm(FlaskForm):
@@ -121,16 +125,32 @@ def calc2():
 def feedback():
     form = FeedbackForm()
     if form.validate_on_submit():
-        feedback_data = {
-            'name': form.name.data,
-            'email': form.email.data,
-            'message': form.message.data
-        }
-        feedbacks = read_feedback()
-        feedbacks.append(feedback_data)
-        write_feedback(feedbacks)
+        if form.recaptcha.errors:
+            return redirect(url_for('unsuccess_feedback'))
+        else:
+            feedback_data = {
+                'name': form.name.data,
+                'email': form.email.data,
+                'message': form.message.data
+            }
+            feedbacks = read_feedback()
+            feedbacks.append(feedback_data)
+            write_feedback(feedbacks)
+            return redirect(url_for('success_feedback'))
     return render_template('feedback.html', form=form, title="Обратная связь")
 
+@app.route('/success_feedback')
+def success_feedback():
+    return render_template('success_feedback.html')
+
+@app.route('/unsuccess_feedback')
+def unsuccess_feedback():
+    return render_template('unsuccess_feedback.html')
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run()
